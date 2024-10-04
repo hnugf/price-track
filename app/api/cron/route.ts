@@ -3,9 +3,7 @@ import { connectToDB } from "@/lib/mongoose"
 import { generateEmailBody, sendEmail } from "@/lib/nodemailer";
 import { scapeAmazonProduct } from "@/lib/scraper";
 import { getAveragePrice, getEmailNotifType, getHighestPrice, getLowestPrice } from "@/lib/utils";
-import { connect } from "http2"
 import { NextResponse } from "next/server";
-import { title } from "process";
 
 
 

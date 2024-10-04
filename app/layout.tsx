@@ -5,10 +5,10 @@ import {Inter, Space_Grotesk} from "next/font/google";
 
 
 const inter = Inter ({ subsets: ['latin']})
-const sapceGrotesk = Space_Grotesk({ 
-  subsets: ['latin'], 
-  weight: ['300', '400','500','600','700']
-})
+// const sapceGrotesk = Space_Grotesk({ 
+//   subsets: ['latin'], 
+//   weight: ['300', '400','500','600','700']
+// })
 export const metadata: Metadata = {
   title: 'Pricewise',
   description: 'Track product prices effortlessly and save money on your online ',
