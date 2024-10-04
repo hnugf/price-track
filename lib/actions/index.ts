@@ -7,8 +7,6 @@ import Product from "../models/product.model";
 import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
 import { User } from "@/types";
 import { generateEmailBody, sendEmail } from "../nodemailer";
-import { send } from "process";
-import {Product as ProductType} from "@/types/index"
 export async function scapeAndStroeProduct(productURL: string) {
     if(!productURL) return;
 

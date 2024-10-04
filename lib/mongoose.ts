@@ -1,5 +1,4 @@
-import mongoose, { Mongoose } from 'mongoose';
-import { connected } from 'process';
+import mongoose, {} from 'mongoose';
 
 
 let isConnected = false;
