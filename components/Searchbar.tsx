@@ -34,7 +34,7 @@ const Searchbar = () => {
     try {
       setisLoading(true);
 
-      const product = await scapeAndStroeProduct(searchPrompt);
+      await scapeAndStroeProduct(searchPrompt);
     } catch (error) {
       console.log(error);
     } finally{
