@@ -14,61 +14,61 @@ export async function GET() {
     try {
         connectToDB();
 
-        const products = await Product.find({});
+        const products = await Product.find();
 
         if(!products) throw new Error("No products found");
         //1. SCRAPE LATEST PRODUCT DETAILS & UPDATE DB
-        const updatedProcuts = await Promise.all(
-            products.map(async (currentProduct) => {
-                const scapedProduct = await scapeAmazonProduct(currentProduct.url);
+        // const updatedProcuts = await Promise.all(
+        //     products.map(async (currentProduct) => {
+        //         const scapedProduct = await scapeAmazonProduct(currentProduct.url);
 
-                if(!scapedProduct) throw new Error("No products found");
+        //         if(!scapedProduct) throw new Error("No products found");
 
 
-                const updatedPriceHistory = [
-                    ...currentProduct.priceHistory,
-                    { price: scapedProduct.currentPrice }
-                ]
+        //         const updatedPriceHistory = [
+        //             ...currentProduct.priceHistory,
+        //             { price: scapedProduct.currentPrice }
+        //         ]
     
-                const product = {
-                    ...scapedProduct,
-                    priceHistory: updatedPriceHistory,
-                    lowestPrice: getLowestPrice(updatedPriceHistory),
-                    highestPrice: getHighestPrice(updatedPriceHistory),
-                    averagePrice: getAveragePrice(updatedPriceHistory),
-                }
+        //         const product = {
+        //             ...scapedProduct,
+        //             priceHistory: updatedPriceHistory,
+        //             lowestPrice: getLowestPrice(updatedPriceHistory),
+        //             highestPrice: getHighestPrice(updatedPriceHistory),
+        //             averagePrice: getAveragePrice(updatedPriceHistory),
+        //         }
             
-            const updatedProcut = await Product.findOneAndUpdate( 
-                {  url: product.url },
-                product,
-            );
+        //     const updatedProcut = await Product.findOneAndUpdate( 
+        //         {  url: product.url },
+        //         product,
+        //     );
 
             
-                //2. CHECK EACH PRODCUT'S STATUS & SEND EMAIL ACCORDINGLY
-                const emailNotifType = getEmailNotifType(scapedProduct, currentProduct)
+        //         //2. CHECK EACH PRODCUT'S STATUS & SEND EMAIL ACCORDINGLY
+        //         const emailNotifType = getEmailNotifType(scapedProduct, currentProduct)
                  
 
-                if(emailNotifType && updatedProcut.users.lenght > 0) {
-                    const productInfo = {
-                        title: updatedProcut.title,
-                        url: updatedProcut.url,
-                        image: product.image,
-                    }
+        //         if(emailNotifType && updatedProcut.users.lenght > 0) {
+        //             const productInfo = {
+        //                 title: updatedProcut.title,
+        //                 url: updatedProcut.url,
+        //                 image: product.image,
+        //             }
 
-                    const emailContent = await generateEmailBody(productInfo, emailNotifType);
+        //             const emailContent = await generateEmailBody(productInfo, emailNotifType);
                     
-                    const usersEmails = updatedProcut.users.map((user: any) => user.email)
+        //             const usersEmails = updatedProcut.users.map((user: any) => user.email)
 
 
-                    await sendEmail(emailContent, usersEmails);
-                }
+        //             await sendEmail(emailContent, usersEmails);
+        //         }
 
-                return updatedProcut
-            })
-        )
+        //         return updatedProcut
+        //     })
+        // )
 
         return NextResponse.json({
-            message: 'OK', data: updatedProcuts
+            message: 'OK', data: products.length
         })
     } catch (error) {
         throw new Error(`Eroor in Get: ${error}`)
