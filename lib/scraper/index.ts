@@ -1,4 +1,4 @@
-'use server'
+"use server"
 
 import axios from 'axios';
 import * as cheerio from 'cheerio';
@@ -11,7 +11,7 @@ export async function scapeAmazonProduct(url: string) {
     const username = String(process.env.BRIGHT_DATA_USERNAME);
     const password = String(process.env.BRIGHT_DATA_PASSWORD);
     const port = 22225;
-    const session_id = (8888 * Math.random()) | 0; 
+    const session_id = (1000000 * Math.random()) | 0; 
 
     const option = {
         auth: {
@@ -58,7 +58,6 @@ export async function scapeAmazonProduct(url: string) {
         const discountRate = $('.savingsPercentage').text().replace(/[-%]/g, "");
         
 
-        //console.log({title, currentPrice, outOfStock, imageUrls,currency,discountRate})
         const description = extractDescription($)
 
         const data = {
@@ -85,7 +84,7 @@ export async function scapeAmazonProduct(url: string) {
 
         return data;
     } catch (error: any) {
-        throw  new Error(`Khong the thu thap san pham: ${error.message}`)
+        console.log(error);
         
     }
 }
